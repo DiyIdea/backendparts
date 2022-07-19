@@ -26,6 +26,7 @@ Router.get('/users/:userIdx',async(req,res) => {// 특정유저 읽기
 })
 
 //post user: body parameter 입력(id,password,name, age)를 받아서data.json에 가장 마지막 index에 추가하기.
+//Post/ user : users에 한 개체를 추가함.
 Router.post('/', async(req,res) => {//쓰기
     const connection = await mysql.connect()
     await connection.run("INSERT INTO users (id, password, name, age) VALUES (?,?,?,?);", [])
@@ -35,19 +36,22 @@ Router.post('/', async(req,res) => {//쓰기
 })
 
 //put user: body parameter 입력(index, id, password, name, age)을 받아서 해당 index의
-Router.put('/', async(req,res) => {
-    const { id, password, name, age, index} = req.body
+//PUT v1/users/:usersIdx 컬렉션에 있는  usersIdx번 정보를 덮어쓰기 하겠다.(한 개체를 수정한다)
+Router.put('/user/:userIdx', async(req,res) => {
+    const {userIdx} = req.params
+    const { id, password, name, age} = req.body
     const connection = await mysql.connect()
-    await connection.run("UPDATE users SET id = ?, password = ?, name = ?, age = ? WHERE idx = ?;",[id, password, name, age, index])
+    await connection.run("UPDATE users SET id = ?, password = ?, name = ?, age = ? WHERE idx = ?;",[id, password, name, age, userIdx])
     res.send({
         success: true
     })
 })
 
-Router.delete('/', async(req,res) => {
-    const {index} = req.body
+// DELETE /user: body parameter 입력(index)을 받아서 해당 index의 data 제거하기.
+Router.delete('/users/:userIdx', async(req,res) => {
+    const {userIdx} = req.params
     const connection = await mysql.connect()
-    await connection.run(`DELETE FROM users WHERE idx = ?;`,[index])
+    await connection.run(`DELETE FROM users WHERE idx = ?;`,[userIdx])
     res.send({
         success: true
     })
