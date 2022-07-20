@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from "cors"
 import usersRouter from "./api/users"
+import usersPostRouter from "./api/users/post"
 
 const app = express()
 const PORT = 3714
@@ -12,6 +13,7 @@ app.use(express.json())
 app.use(cors())
 
 app.use('/v1',usersRouter)
+app.use('/v1',usersPostRouter)
 //end point 등록 방법 ::
 // 1. app.get 직접 등록
 // 2. router 모듈을 사용한 등록 => 지금 router 등록 방식
