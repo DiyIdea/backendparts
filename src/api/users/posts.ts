@@ -11,7 +11,7 @@ router.get('/users/:userIdx/posts',async (req,res) => {// 전부 읽기
     res.send(selectUsersPostsResult)
 })
 //특정 post 읽기
-router.get('/users/:userIdx/posts/:postIdx', async (req,res) => {
+// router.get('/users/:userIdx/posts/:postIdx', async (req,res) => {
 
-})
+// })
 export default router
