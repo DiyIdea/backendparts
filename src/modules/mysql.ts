@@ -2,7 +2,8 @@ import mysql, {Connection} from "mysql2/promise"
 import dotenv from 'dotenv'
 dotenv.config()
 
-const DB_URL = `mysql://${process.env.MYSQL_ID}:${process.env.MYSQL_PASSWORD}@${process.env.MYSQL_HOST}/${process.env.MYSQL_DB}?ssl={"rejectUnauthorized":true}`
+//const DB_URL = `mysql://${process.env.MYSQL_ID}:${process.env.MYSQL_PASSWORD}@${process.env.MYSQL_HOST}/${process.env.MYSQL_DB}?ssl={"rejectUnauthorized":true}`
+const DB_URL = 'mysql://hb4ytthb795z:pscale_pw_OfH64xMO3pN-KIoFTjOb0Xg1B0bEaOPLws4IMszEZl0@nbvxrq4tzsf3.ap-northeast-2.psdb.cloud/awmaker?ssl={"rejectUnauthorized":true}'
 
 interface customConnection extends Connection{
     run? : Function

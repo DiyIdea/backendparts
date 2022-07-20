@@ -21,7 +21,7 @@ Router.get('/users',async (req,res) => {// 전부 읽기
 Router.get('/users/:userIdx',async(req,res) => {// 특정유저 읽기
     const {userIdx} = req.params
     const connection = await mysql.connect()
-    const [selectUserResult] = await connection.run("SELECT * FROM users WHERE idx = ? ; ", [userIdx])
+    const [selectUserResult] = await connection.run("SELECT * FROM users WHERE idx = ?;", [userIdx])
     res.send(selectUserResult)
 })
 
