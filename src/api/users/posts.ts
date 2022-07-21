@@ -1,5 +1,4 @@
 import express from 'express'
-import { title } from 'process'
 import mysql from '../../modules/mysql'
 const router = express.Router()
 
@@ -38,6 +37,10 @@ router.post("/users/:userIdx/posts", async (req,res)=> {
         success: true
     })
 })
+
+//PUT 특정 유저의 게시글에서 특징 idx의 게시글 수정
+
+//DELETE 특정 유저의 게시글에서 특정 idx의 게시글 삭제
 
 
 
