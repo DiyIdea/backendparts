@@ -2,7 +2,8 @@
 import express from 'express'
 const app = express()
 
-console.log(app.use())
+
+
 
 // const put = (func:any) => {
 //     func(3)

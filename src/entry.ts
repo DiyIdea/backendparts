@@ -10,7 +10,7 @@ const PORT = 3714
 
 //미들웨어란? static, urlencoded, json, cors, usemysql 같은 app.use안에 있는 것.
 //미들웨어 설명은 5_23 강의 1:43:40 부터 간단한 설명.
-app.use(express.static('public'))
+app.use(express.static('public')) // 이미지 로드 등 public 에 있는 문서를 로드하여줌
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 app.use(cors())
