@@ -3,14 +3,19 @@ import cors from "cors"
 import usersRouter from "./api/users"
 import usersPostRouter from "./api/users/posts"
 
+import {useMysql} from './middlewares/useMysql'
+
 const app = express()
 const PORT = 3714
 
-
+//미들웨어란? static, urlencoded, json, cors, usemysql 같은 app.use안에 있는 것.
+//미들웨어 설명은 5_23 강의 1:43:40 부터 간단한 설명.
 app.use(express.static('public'))
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 app.use(cors())
+
+app.use(useMysql)
 
 app.use('/v1',usersRouter)
 app.use('/v1',usersPostRouter)
