@@ -10,3 +10,4 @@ export const useMysql = async (req: RequestwithConnection, res:Response, next: N
     req.mysqlConnection = connection
     next()
 }
+
