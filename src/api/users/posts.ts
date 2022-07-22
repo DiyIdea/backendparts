@@ -1,5 +1,12 @@
 import express from 'express'
 import mysql from '../../modules/mysql'
+
+import {Request, Response, NextFunction} from 'express'
+import { Connection } from 'mysql2/promise';
+interface RequestwithConnection extends Request {
+    mysqlConnection: any
+}
+
 const router = express.Router()
 
 //특정 user 가 소유하고 있는 게시글 전부 읽기
@@ -40,8 +47,51 @@ router.post("/users/:userIdx/posts", async (req,res)=> {
 
 //PUT 특정 유저의 게시글에서 특징 idx의 게시글 수정
 
-//DELETE 특정 유저의 게시글에서 특정 idx의 게시글 삭제
+router.put('/users/:userIdx/posts/:postIdx', async (req:any,res) => {
+    const {userIdx, postIdx } = req.params
+    const { contents, title } = req.body
+    const connection = req.mysqlConnection
 
+    try {
+        const countUsersPost = await connection.run('SELECT COUNT(*) AS count FROM posts WHERE author_idx = ? AND idx = ?',[userIdx, postIdx])
+        if(countUsersPost[0].count !==1) {
+            throw new Error('해당 포스터는 존재하지 않습니다.')
+        }
+
+        await connection.run(`UPDATE posts SET title=? , contents =? WHERE idx =?`, [title, contents, postIdx])
+        res.send({
+            success:true
+        })
+    } catch (e) {
+        res.send({
+            success: false,
+            errorMessage: `${e}`
+        })
+    }
+})
+
+//DELETE 특정 유저의 게시글에서 특정 idx의 게시글 삭제
+router.delete('/users/:userIdx/posts/:postIdx', async (req:any,res) => {
+    const {userIdx, postIdx } = req.params
+    const connection = req.mysqlConnection
+
+    try {
+        const countUsersPost = await connection.run('SELECT COUNT(*) AS count FROM posts WHERE author_idx = ? AND idx = ?',[userIdx, postIdx])
+        if(countUsersPost[0].count !==1) {
+            throw new Error('해당 포스터는 존재하지 않습니다.')
+        }
+
+        await connection.run(`DELETE FROM POSTS WHERE idx =?`, [postIdx])
+        res.send({
+            success:true
+        })
+    } catch (e) {
+        res.send({
+            success: false,
+            errorMessage: `${e}`
+        })
+    }
+})
 
 
 export default router
